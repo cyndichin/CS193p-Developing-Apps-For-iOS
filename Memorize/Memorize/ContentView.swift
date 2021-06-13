@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojis: [String] = ["🚊", "🚞", "🚆", "🚃", "🚅", "🚂", "🚇", "🚋"]
-    @State var emojiCount = 6
+    @State var emojis = ["🚊", "🚞", "🚆", "🚃", "🚅", "🚂", "🚇", "🚋", "🚚", "🚛", "🛫", "🛺", "🚐", "🚜"].shuffled()
+    @State var emojiCount = Int.random(in: 4..<14)
+    
     var body: some View {
         VStack {
+            Text("Memorize!").font(.largeTitle).bold().padding()
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                     ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
@@ -22,9 +24,11 @@ struct ContentView: View {
             .foregroundColor(.red)
             Spacer()
             HStack {
-                remove
+                theme1
                 Spacer()
-                add
+                theme2
+                Spacer()
+                theme3
             }
             .font(.largeTitle)
             .padding(.horizontal)
@@ -32,25 +36,45 @@ struct ContentView: View {
         .padding(.horizontal)
     }
     
-    var remove: some View {
+    var theme1: some View {
         Button {
-            if emojiCount > 1 {
-                emojiCount -= 1
-            }
+            emojis = ["🚊", "🚞", "🚆", "🚃", "🚅", "🚂", "🚇", "🚋", "🚚", "🚛", "🛫", "🛺", "🚐", "🚜"].shuffled()
+            emojiCount = Int.random(in: 4..<emojis.count)
         } label: {
-            Image(systemName: "minus.circle")
+            VStack {
+                Image(systemName: "car.fill")
+                Text("Vehicles")
+                    .font(.subheadline)
+            }
         }
     }
     
-    var add: some View {
+    var theme2: some View {
         Button {
-            if emojiCount < emojis.count {
-                emojiCount += 1
-            }
+            emojis = ["🌪", "🌈", "☀️", "🌤", "⛅️", "☁️", "🌦", "🌧", "🌩", "❄️", "☃️", "🌬", "☔️", "🌫"].shuffled()
+            emojiCount = Int.random(in: 4..<emojis.count)
         } label: {
-            Image(systemName: "plus.circle")
+            VStack {
+                Image(systemName: "cloud.sun.fill")
+                Text("Food")
+                    .font(.subheadline)
+            }
         }
     }
+    
+    var theme3: some View {
+        Button {
+            emojis = ["🐶", "🐱", "🐹", "🦊", "🐰", "🐻", "🐼", "🐨", "🦁", "🐷", "🐵", "🦄", "🐣", "🐮"].shuffled()
+            emojiCount = Int.random(in: 4..<emojis.count)
+        } label: {
+            VStack {
+                Image(systemName: "tortoise.fill")
+                Text("Animals")
+                    .font(.subheadline)
+            }
+        }
+    }
+    
     
 }
 
@@ -79,5 +103,12 @@ struct ContentView_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
         ContentView()
             .preferredColorScheme(.light)
+        ContentView()
+            .previewDevice(PreviewDevice(rawValue: "iPhone 12 Pro Max"))
+            .previewDisplayName("iPhone 12 Pro Max")
+            .preferredColorScheme(.dark)
+        ContentView()
+            .previewDevice(PreviewDevice(rawValue: "iPad Air (4th generation)"))
+            .previewDisplayName("iPad Air (4th generation)")
     }
 }
